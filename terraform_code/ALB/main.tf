@@ -57,6 +57,7 @@ resource "aws_lb_target_group" "blue" {
   port     = 8081
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
+  target_type="instance"
 
   health_check {
     path                = "/blue/health"
@@ -73,6 +74,7 @@ resource "aws_lb_target_group" "pink" {
   port     = 8082
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
+  target_type="instance"
 
   health_check {
     path                = "/pink/health"
@@ -90,6 +92,7 @@ resource "aws_lb_target_group" "lime" {
   port     = 8083
   protocol = "HTTP"
   vpc_id   = data.aws_vpc.default.id
+  target_type="instance"
 
   health_check {
     path                = "/lime/health"
