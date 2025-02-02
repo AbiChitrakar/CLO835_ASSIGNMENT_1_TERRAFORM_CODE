@@ -8,3 +8,14 @@ output "alb_security_group_id" {
   value       = aws_security_group.alb_sg.id
 }
 
+output "blue_tg_arn" {
+  value = aws_lb_target_group.blue.arn
+}
+
+output "pink_tg_arn" {
+  value = aws_lb_target_group.pink.arn
+}
+
+output "lime_tg_arn" {
+  value = aws_lb_target_group.lime.arn
+}

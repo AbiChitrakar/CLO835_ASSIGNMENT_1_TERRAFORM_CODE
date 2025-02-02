@@ -44,7 +44,7 @@ resource "aws_lb" "app_lb" {
   load_balancer_type = "application"
   security_groups    = [aws_security_group.alb_sg.id]
   subnets            = data.aws_subnets.default.ids
-  depends_on = [aws_security_group.alb_sg]
+  depends_on         = [aws_security_group.alb_sg]
 
   tags = {
     Name = "webapp-alb"
@@ -53,11 +53,11 @@ resource "aws_lb" "app_lb" {
 
 # Third: Create Target Groups
 resource "aws_lb_target_group" "blue" {
-  name     = "blue-tg"
-  port     = 8081
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.default.id
-  target_type="instance"
+  name        = "blue-tg"
+  port        = 8081
+  protocol    = "HTTP"
+  vpc_id      = data.aws_vpc.default.id
+  target_type = "instance"
 
   health_check {
     path                = "/blue/health"
@@ -70,11 +70,11 @@ resource "aws_lb_target_group" "blue" {
 }
 
 resource "aws_lb_target_group" "pink" {
-  name     = "pink-tg"
-  port     = 8082
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.default.id
-  target_type="instance"
+  name        = "pink-tg"
+  port        = 8082
+  protocol    = "HTTP"
+  vpc_id      = data.aws_vpc.default.id
+  target_type = "instance"
 
   health_check {
     path                = "/pink/health"
@@ -88,11 +88,11 @@ resource "aws_lb_target_group" "pink" {
 }
 
 resource "aws_lb_target_group" "lime" {
-  name     = "lime-tg"
-  port     = 8083
-  protocol = "HTTP"
-  vpc_id   = data.aws_vpc.default.id
-  target_type="instance"
+  name        = "lime-tg"
+  port        = 8083
+  protocol    = "HTTP"
+  vpc_id      = data.aws_vpc.default.id
+  target_type = "instance"
 
   health_check {
     path                = "/lime/health"
