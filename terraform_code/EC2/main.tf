@@ -5,7 +5,7 @@ provider "aws" {
 
 
 data "aws_security_group" "alb_sg" {
-  name = "alb-sg"  # Use the name you gave to your ALB security group
+  name   = "alb-sg" # Use the name you gave to your ALB security group
   vpc_id = data.aws_vpc.default.id
 }
 
@@ -48,7 +48,15 @@ resource "aws_instance" "CLO835-Assignment1" {
   key_name                    = aws_key_pair.my_key.key_name
   vpc_security_group_ids      = [aws_security_group.my_sg.id]
   associate_public_ip_address = true
-
+  user_data = <<-EOF
+                #!/bin/bash
+                sudo yum update -y
+                sudo yum install docker -y
+                sudo systemctl start docker
+                sudo systemctl enable docker
+                sudo usermod -aG docker ec2-user
+                sudo yum install -y aws-cli
+                EOF              
   lifecycle {
     create_before_destroy = true
   }
@@ -73,18 +81,21 @@ resource "aws_security_group" "my_sg" {
   vpc_id      = data.aws_vpc.default.id
 
   ingress {
-    description      = "SSH from everywhere"
-    from_port        = 22
-    to_port          = 22
-    protocol         = "tcp"
-    security_groups = [data.aws_security_group.alb_sg.id]  
+    description = "SSH from everywhere"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    # security_groups = [data.aws_security_group.alb_sg.id]
+    cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    description      = "Opening HTTP from everywhere"
-    from_port        = 8081
-    to_port          = 8083
-    protocol         = "tcp"
-    security_groups = [data.aws_security_group.alb_sg.id]  
+    description = "Opening HTTP from everywhere"
+    from_port   = 8081
+    to_port     = 8083
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+
+    # security_groups = [data.aws_security_group.alb_sg.id]
   }
 
   egress {
