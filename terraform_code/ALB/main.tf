@@ -60,10 +60,11 @@ resource "aws_lb_target_group" "blue" {
   target_type = "instance"
 
   health_check {
-    path                = "/blue/health"
+    # path                = "/blue/health"
+    path                = "/"
     healthy_threshold   = 2
-    unhealthy_threshold = 10
-    interval            = 30
+    unhealthy_threshold = 2
+    interval            = 10
     timeout             = 5
   }
   depends_on = [aws_lb.app_lb]
@@ -77,10 +78,11 @@ resource "aws_lb_target_group" "pink" {
   target_type = "instance"
 
   health_check {
-    path                = "/pink/health"
+    # path                = "/pink/health"
+    path                = "/"
     healthy_threshold   = 2
-    unhealthy_threshold = 10
-    interval            = 30
+    unhealthy_threshold = 2
+    interval            = 10
     timeout             = 5
   }
 
@@ -95,10 +97,10 @@ resource "aws_lb_target_group" "lime" {
   target_type = "instance"
 
   health_check {
-    path                = "/lime/health"
+    path                = "/"
     healthy_threshold   = 2
-    unhealthy_threshold = 10
-    interval            = 30
+    unhealthy_threshold = 2
+    interval            = 10
     timeout             = 5
   }
 
