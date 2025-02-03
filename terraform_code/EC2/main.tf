@@ -89,12 +89,21 @@ resource "aws_security_group" "my_sg" {
     cidr_blocks = ["0.0.0.0/0"]
   }
   ingress {
-    description = "Opening HTTP from everywhere"
+    description = "Opening HTTP for  ALB only"
     from_port   = 8081
     to_port     = 8083
     protocol    = "tcp"
     # cidr_blocks = ["0.0.0.0/0"]
     security_groups = [data.aws_security_group.alb_sg.id]
+  }
+  
+    ingress {
+    description = "Opening HTTP from everywhere"
+    from_port   = 8081
+    to_port     = 8083
+    protocol    = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+    # security_groups = [data.aws_security_group.alb_sg.id]
   }
 
   egress {
